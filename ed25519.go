@@ -48,6 +48,11 @@ func (k *Ed25519PrivateKey) Bytes() ([]byte, error) {
 	return proto.Marshal(pbmes)
 }
 
+// BytesU returns the public key bytes without passing it through proto.Marshal
+func (k *Ed25519PrivateKey) BytesU() [64]byte {
+	return *k.sk
+}
+
 func (k *Ed25519PrivateKey) Equals(o Key) bool {
 	edk, ok := o.(*Ed25519PrivateKey)
 	if !ok {
@@ -78,6 +83,11 @@ func (k *Ed25519PublicKey) Bytes() ([]byte, error) {
 	pbmes.Type = &typ
 	pbmes.Data = (*k.k)[:]
 	return proto.Marshal(pbmes)
+}
+
+// BytesU returns the public key bytes without passing it through proto.Marshal
+func (k *Ed25519PublicKey) BytesU() [32]byte {
+	return *k.k
 }
 
 func (k *Ed25519PublicKey) Equals(o Key) bool {
